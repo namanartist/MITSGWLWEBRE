@@ -71,27 +71,50 @@ export const About = () => {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="mb-24 bg-white/40 backdrop-blur-sm border border-black/10 rounded-[2rem] p-8 md:p-12"
+        transition={{ duration: 0.8 }}
+        className="mb-24 bg-white/40 backdrop-blur-sm border border-black/10 rounded-[2rem] p-8 md:p-12 relative overflow-hidden"
       >
+        <div className="absolute top-0 right-0 w-64 h-64 bg-orange-100/30 rounded-full blur-3xl -z-10" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-100/30 rounded-full blur-3xl -z-10" />
+        
         <div className="grid md:grid-cols-3 gap-12 items-center">
-          <div className="aspect-[3/4] rounded-2xl overflow-hidden border border-black/10">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="aspect-[3/4] rounded-2xl overflow-hidden border border-black/10 shadow-xl"
+          >
             <img 
-              src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop" 
-              alt="Director" 
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMGxjSyQe9TK7rMUgNhwPqrXf7CgCOPngRRg&s" 
+              alt="Vice Chancellor" 
               className="w-full h-full object-cover"
+              referrerPolicy="no-referrer"
             />
-          </div>
+          </motion.div>
           <div className="md:col-span-2 space-y-6">
-            <h2 className="font-serif text-4xl">Director's Message</h2>
-            <div className="w-12 h-1 bg-orange-400"></div>
-            <p className="text-lg text-black/80 leading-relaxed italic">
-              "At MITS, we believe in empowering our students with not just technical knowledge, but the critical thinking and leadership skills required to thrive in a rapidly changing world. Our commitment to excellence in education and research remains unwavering."
-            </p>
-            <div>
-              <p className="font-medium text-lg">Dr. R. K. Pandit</p>
-              <p className="text-black/60">Director, MITS Gwalior</p>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <h2 className="font-serif text-4xl mb-2">Vice Chancellor's Message</h2>
+              <div className="w-12 h-1 bg-orange-400 mb-6"></div>
+              <p className="text-xl text-black/80 leading-relaxed italic font-light">
+                "At MITS, we believe in empowering our students with not just technical knowledge, but the critical thinking and leadership skills required to thrive in a rapidly changing world. Our commitment to excellence in education and research remains unwavering as we prepare the next generation of global leaders."
+              </p>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <p className="font-serif text-2xl font-medium">Prof. (Dr.) R. K. Pandit</p>
+              <p className="text-black/60 uppercase tracking-widest text-sm">Vice Chancellor, MITS Gwalior</p>
+            </motion.div>
           </div>
         </div>
       </motion.section>

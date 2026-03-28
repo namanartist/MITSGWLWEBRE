@@ -72,19 +72,28 @@ export const Navbar = () => {
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 lg:h-20">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-3 shrink-0">
-              <img src="https://img.jagranjosh.com/images/2022/June/162022/MITS.png" className="h-10 w-auto" alt="MITS Gwalior Logo" />
-              <div className="flex flex-col">
-                <span className="font-serif font-medium text-lg leading-tight">MITS Gwalior</span>
-                <span className="text-[10px] uppercase tracking-wider text-black/60">Estd. 1957</span>
-              </div>
-            </Link>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Link to="/" className="flex items-center gap-3 shrink-0">
+                <img src="https://img.jagranjosh.com/images/2022/June/162022/MITS.png" className="h-10 w-auto" alt="MITS Gwalior Logo" />
+                <div className="flex flex-col">
+                  <span className="font-serif font-medium text-lg leading-tight">MITS Gwalior</span>
+                  <span className="text-[10px] uppercase tracking-wider text-black/60">Estd. 1957</span>
+                </div>
+              </Link>
+            </motion.div>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-1 xl:gap-2">
-              {NAV_LINKS.map((link) => (
-                <div 
+              {NAV_LINKS.map((link, i) => (
+                <motion.div 
                   key={link.name}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: i * 0.05 }}
                   className="relative group"
                   onMouseEnter={() => setActiveDropdown(link.name)}
                   onMouseLeave={() => setActiveDropdown(null)}
@@ -123,7 +132,7 @@ export const Navbar = () => {
                       )}
                     </AnimatePresence>
                   )}
-                </div>
+                </motion.div>
               ))}
             </div>
 
