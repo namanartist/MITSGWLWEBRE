@@ -24,7 +24,11 @@ const NAV_LINKS = [
       { name: 'PG Programs', path: '/academics#pg-programs' },
       { name: 'Ph.D.', path: '/academics#phd' },
       { name: 'Departments', path: '/academics#departments' },
-      { name: 'Academic Calendar', path: '/academics#academic-calendar' }
+      { name: 'Academic Calendar', path: '/academic-calendar' },
+      { name: 'Syllabus', path: '/syllabus' },
+      { name: 'Schemes', path: '/schemes' },
+      { name: 'Time Table', path: '/timetable' },
+      { name: 'Faculty Profiles', path: '/faculty' },
     ]
   },
   { 
@@ -42,6 +46,7 @@ const NAV_LINKS = [
     path: '#',
     dropdown: [
       { name: 'Notice Board', path: '/notice-board' },
+      { name: 'Events', path: '/events' },
       { name: 'Tenders', path: '/tenders' },
       { name: 'Careers', path: '/careers' }
     ]
@@ -49,6 +54,7 @@ const NAV_LINKS = [
   { name: 'Student Life', path: '/student-life' },
   { name: 'Placements', path: '/placements' },
   { name: 'Research', path: '/research' },
+  { name: 'Contact', path: '/contact' },
 ];
 
 const LOGIN_PLATFORMS = [

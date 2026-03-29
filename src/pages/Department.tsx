@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
+import { SEO } from '../components/SEO';
 import { ChevronRight, Download, FileText, Menu, X, Users, BookOpen, FlaskConical, Award, Briefcase, ChevronDown, Linkedin, Mail } from 'lucide-react';
 import { DEPARTMENTS } from '../data/departments';
+import { FACULTY_DATA } from './Faculty';
+import { FacultyModal } from '../components/FacultyModal';
 
 const SIDEBAR_GROUPS = [
   {
@@ -87,6 +90,7 @@ export const Department = () => {
   const department = DEPARTMENTS.find(d => d.id === id) || DEPARTMENTS[0];
   const [activeSection, setActiveSection] = useState('about');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedFaculty, setSelectedFaculty] = useState<any>(null);
 
   // Update dynamic labels
   const dynamicGroups = SIDEBAR_GROUPS.map(group => ({
@@ -181,40 +185,62 @@ export const Department = () => {
           </div>
         );
       case 'faculty':
+        const deptFaculty = FACULTY_DATA.filter(f => f.department === department.name);
         return (
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <h2 className="text-3xl font-serif mb-6 text-[#800000]">{title}</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="flex gap-4 p-5 border border-black/10 rounded-2xl bg-white hover:shadow-lg transition-all group">
-                  <div className="w-24 h-24 bg-gray-200 rounded-xl shrink-0 overflow-hidden">
-                    <img src={`https://i.pravatar.cc/150?img=${i + 10}`} alt="Faculty" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-lg text-[#800000]">Dr. Faculty Name {i}</h4>
-                    <p className="text-sm text-orange-600 font-medium mb-1">{i === 1 ? 'Professor & Head' : 'Assistant Professor'}</p>
-                    <p className="text-xs text-black/60 mb-2">Ph.D. (IIT Delhi), M.Tech</p>
-                    <div className="mb-3">
-                      <p className="text-xs font-semibold text-black/80 mb-1">Research Interests:</p>
-                      <p className="text-xs text-black/70 line-clamp-2">Advanced computing, sustainable engineering, data analytics, artificial intelligence in structural design.</p>
-                    </div>
-                    <div className="flex items-center justify-between mt-auto">
-                      <div className="flex gap-3">
-                        <a href="#" className="text-black/40 hover:text-[#0077b5] transition-colors" title="LinkedIn Profile">
-                          <Linkedin className="w-4 h-4" />
-                        </a>
-                        <a href="#" className="text-black/40 hover:text-[#ea4335] transition-colors" title="Email">
-                          <Mail className="w-4 h-4" />
-                        </a>
-                      </div>
-                      <button className="text-xs font-medium text-[#800000] hover:underline flex items-center gap-1">
-                        Profile <ChevronRight className="w-3 h-3"/>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-3xl font-serif text-[#800000]">{title}</h2>
+              <span className="bg-[#800000]/10 text-[#800000] px-4 py-1 rounded-full text-sm font-medium">
+                {deptFaculty.length} Members
+              </span>
             </div>
+            {deptFaculty.length > 0 ? (
+              <div className="grid md:grid-cols-2 gap-6">
+                {deptFaculty.map((faculty) => (
+                  <div 
+                    key={faculty.id} 
+                    className="flex gap-4 p-5 border border-black/10 rounded-2xl bg-white hover:shadow-lg transition-all group cursor-pointer"
+                    onClick={() => setSelectedFaculty(faculty)}
+                  >
+                    <div className="w-24 h-24 bg-gray-200 rounded-xl shrink-0 overflow-hidden">
+                      <img src={faculty.image} alt={faculty.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                    </div>
+                    <div className="flex flex-col flex-1">
+                      <h4 className="font-bold text-lg text-[#800000] group-hover:text-orange-600 transition-colors">{faculty.name}</h4>
+                      <p className="text-sm text-orange-600 font-medium mb-1">{faculty.designation}</p>
+                      <p className="text-xs text-black/60 mb-2">{faculty.qualification}</p>
+                      <div className="mb-3">
+                        <p className="text-xs font-semibold text-black/80 mb-1">Specialization:</p>
+                        <p className="text-xs text-black/70 line-clamp-2">{faculty.specialization}</p>
+                      </div>
+                      <div className="flex items-center justify-between mt-auto">
+                        <div className="flex gap-3">
+                          <a 
+                            href={`mailto:${faculty.email}`} 
+                            className="text-black/40 hover:text-[#ea4335] transition-colors" 
+                            title="Email"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Mail className="w-4 h-4" />
+                          </a>
+                        </div>
+                        <button className="text-xs font-medium text-[#800000] hover:underline flex items-center gap-1">
+                          View Profile <ChevronRight className="w-3 h-3"/>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-20 bg-gray-50 rounded-3xl border border-dashed border-gray-300">
+                <Users className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+                <p className="text-gray-500">No faculty profiles found for this department yet.</p>
+                <Link to="/faculty" className="text-[#800000] font-medium hover:underline mt-2 inline-block">
+                  View all faculty members
+                </Link>
+              </div>
+            )}
           </div>
         );
       case 'laboratories':
@@ -258,6 +284,10 @@ export const Department = () => {
 
   return (
     <div className="min-h-screen bg-[#f8f9fa]">
+      <SEO 
+        title={department.name} 
+        description={`Explore the ${department.name} department at MITS Gwalior, including faculty, research, and academic programs.`}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
         <div className="flex flex-col lg:flex-row gap-8">
           
@@ -316,6 +346,15 @@ export const Department = () => {
 
         </div>
       </div>
+
+      <AnimatePresence>
+        {selectedFaculty && (
+          <FacultyModal 
+            faculty={selectedFaculty} 
+            onClose={() => setSelectedFaculty(null)} 
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import React from 'react';
 import { ArrowRight, BookOpen, Clock, Users, Shield, FileText, CheckCircle2 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
+import { SEO } from '../components/SEO';
 
 export const About = () => {
   const container = {
@@ -18,6 +20,10 @@ export const About = () => {
 
   return (
     <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <SEO 
+        title="About Us" 
+        description="Learn about the rich history, vision, and mission of Madhav Institute of Technology & Science (MITS) Gwalior, established in 1957."
+      />
       {/* Header */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
@@ -129,20 +135,22 @@ export const About = () => {
         <h2 className="font-serif text-4xl mb-12 text-center">Policies & Accreditation</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { title: 'Code of Conduct', icon: Shield, desc: 'Guidelines for student and staff behavior.' },
-            { title: 'UGC Disclosure', icon: FileText, desc: 'Mandatory disclosures as per UGC norms.' },
-            { title: 'NAAC Reports', icon: CheckCircle2, desc: 'Self Study Reports and peer team findings.' },
-            { title: 'Anti-Ragging Policy', icon: Users, desc: 'Zero tolerance policy towards ragging.' },
-            { title: 'Academic SOPs', icon: BookOpen, desc: 'Standard operating procedures for academics.' },
-            { title: 'RTI Information', icon: Clock, desc: 'Right to Information act disclosures.' },
+            { title: 'Code of Conduct', icon: Shield, desc: 'Guidelines for student and staff behavior.', path: '/code-of-conduct' },
+            { title: 'UGC Disclosure', icon: FileText, desc: 'Mandatory disclosures as per UGC norms.', path: '/ugc-disclosure' },
+            { title: 'NAAC Reports', icon: CheckCircle2, desc: 'Self Study Reports and peer team findings.', path: '/naac-reports' },
+            { title: 'Anti-Ragging Policy', icon: Users, desc: 'Zero tolerance policy towards ragging.', path: '/anti-ragging' },
+            { title: 'Academic SOPs', icon: BookOpen, desc: 'Standard operating procedures for academics.', path: '/academic-sops' },
+            { title: 'RTI Information', icon: Clock, desc: 'Right to Information act disclosures.', path: '/rti-information' },
           ].map((item, i) => (
-            <motion.div variants={item} key={i} className="p-6 border border-black/10 rounded-2xl bg-white hover:shadow-lg transition-shadow group cursor-pointer">
-              <item.icon className="w-8 h-8 text-orange-500 mb-4" />
-              <h3 className="font-medium text-lg mb-2 group-hover:text-orange-600 transition-colors">{item.title}</h3>
-              <p className="text-sm text-black/60 mb-4">{item.desc}</p>
-              <span className="text-sm font-medium flex items-center gap-1">
-                Read More <ArrowRight className="w-4 h-4" />
-              </span>
+            <motion.div variants={item} key={i}>
+              <Link to={item.path} className="p-6 border border-black/10 rounded-2xl bg-white hover:shadow-lg transition-shadow group flex flex-col h-full">
+                <item.icon className="w-8 h-8 text-orange-500 mb-4" />
+                <h3 className="font-medium text-lg mb-2 group-hover:text-orange-600 transition-colors">{item.title}</h3>
+                <p className="text-sm text-black/60 mb-4">{item.desc}</p>
+                <span className="text-sm font-medium flex items-center gap-1 mt-auto">
+                  Read More <ArrowRight className="w-4 h-4" />
+                </span>
+              </Link>
             </motion.div>
           ))}
         </div>

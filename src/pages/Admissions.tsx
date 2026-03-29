@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { ArrowRight, CheckCircle2, FileText, CreditCard, HelpCircle, Download } from 'lucide-react';
-import { motion } from 'motion/react';
+import { ArrowRight, CheckCircle2, FileText, CreditCard, HelpCircle, Download, X, Send, User, Mail, Phone, BookOpen } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { SEO } from '../components/SEO';
 
 export const Admissions = () => {
   const [activeTab, setActiveTab] = useState('ug');
+  const [showApplyModal, setShowApplyModal] = useState(false);
+  const [formStep, setFormStep] = useState(1);
 
   const container = {
     hidden: { opacity: 0 },
@@ -28,6 +31,10 @@ export const Admissions = () => {
 
   return (
     <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <SEO 
+        title="Admissions 2026" 
+        description="Apply for undergraduate, postgraduate, and doctoral programs at MITS Gwalior. Find eligibility criteria, fee structure, and application process."
+      />
       {/* Header */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
@@ -40,6 +47,38 @@ export const Admissions = () => {
           Join a legacy of excellence. Applications are now open for Undergraduate, Postgraduate, and Doctoral programs.
         </p>
       </motion.div>
+
+      {/* Hero Apply Section */}
+      <motion.section 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8 }}
+        className="mb-24 relative rounded-[3rem] overflow-hidden bg-[#800000] text-white p-12 md:p-20 text-center"
+      >
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523050853063-913e3e96038f?q=80&w=2000&auto=format&fit=crop')] opacity-10 mix-blend-overlay" />
+        <div className="relative z-10 max-w-3xl mx-auto">
+          <h2 className="font-serif text-4xl md:text-6xl mb-8">Start Your Journey Today</h2>
+          <p className="text-xl text-white/80 mb-12 leading-relaxed">
+            Be part of a community that fosters innovation, leadership, and academic brilliance. Apply now for the 2026 academic session.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <button 
+              onClick={() => setShowApplyModal(true)}
+              className="px-10 py-5 bg-white text-[#800000] rounded-full font-bold text-lg hover:bg-orange-500 hover:text-white transition-all shadow-xl shadow-black/20 flex items-center justify-center gap-3"
+            >
+              Apply Online Now <ArrowRight className="w-5 h-5" />
+            </button>
+            <button className="px-10 py-5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full font-bold text-lg hover:bg-white/20 transition-all flex items-center justify-center gap-3">
+              <Download className="w-5 h-5" /> Download Prospectus
+            </button>
+          </div>
+          <div className="mt-12 flex items-center justify-center gap-8 text-sm font-medium text-white/60">
+            <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-green-400" /> AICTE Approved</span>
+            <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-green-400" /> NAAC Accredited</span>
+            <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-green-400" /> NBA Accredited</span>
+          </div>
+        </div>
+      </motion.section>
 
       {/* Admission Process Flow */}
       <motion.section 
@@ -71,17 +110,6 @@ export const Admissions = () => {
             </motion.div>
           ))}
         </div>
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.8 }}
-          className="mt-12 text-center"
-        >
-          <button className="px-8 py-4 bg-black text-white rounded-full font-medium hover:bg-black/80 transition-colors inline-flex items-center gap-2">
-            Apply Now <ArrowRight className="w-4 h-4" />
-          </button>
-        </motion.div>
       </motion.section>
 
       {/* Tabs for Programs */}
@@ -207,6 +235,116 @@ export const Admissions = () => {
           </div>
         </motion.div>
       </motion.section>
+
+      {/* Apply Modal */}
+      <AnimatePresence>
+        {showApplyModal && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-md">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="bg-white rounded-[3rem] max-w-2xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl p-8 md:p-12"
+            >
+              <button 
+                onClick={() => { setShowApplyModal(false); setFormStep(1); }}
+                className="absolute top-6 right-6 p-3 bg-black/5 hover:bg-black/10 rounded-full transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+
+              <div className="mb-10">
+                <div className="flex items-center gap-4 mb-6">
+                  {[1, 2, 3].map((s) => (
+                    <div key={s} className="flex items-center gap-2">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${formStep >= s ? 'bg-orange-600 text-white' : 'bg-black/5 text-black/40'}`}>
+                        {s}
+                      </div>
+                      {s < 3 && <div className={`w-8 h-0.5 rounded-full ${formStep > s ? 'bg-orange-600' : 'bg-black/5'}`} />}
+                    </div>
+                  ))}
+                </div>
+                <h2 className="font-serif text-3xl text-black mb-2">Admission Application</h2>
+                <p className="text-black/50">Please fill in your details accurately to start your application process.</p>
+              </div>
+
+              <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); if(formStep < 3) setFormStep(formStep + 1); else { alert('Application submitted successfully!'); setShowApplyModal(false); setFormStep(1); } }}>
+                {formStep === 1 && (
+                  <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+                    <div className="grid sm:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <label className="text-xs font-bold uppercase tracking-widest opacity-50 flex items-center gap-2"><User className="w-3 h-3" /> Full Name</label>
+                        <input type="text" required className="w-full px-5 py-3 bg-[#f8f9fa] border border-black/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20" placeholder="John Doe" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-xs font-bold uppercase tracking-widest opacity-50 flex items-center gap-2"><Mail className="w-3 h-3" /> Email Address</label>
+                        <input type="email" required className="w-full px-5 py-3 bg-[#f8f9fa] border border-black/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20" placeholder="john@example.com" />
+                      </div>
+                    </div>
+                    <div className="grid sm:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <label className="text-xs font-bold uppercase tracking-widest opacity-50 flex items-center gap-2"><Phone className="w-3 h-3" /> Phone Number</label>
+                        <input type="tel" required className="w-full px-5 py-3 bg-[#f8f9fa] border border-black/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20" placeholder="+91 00000 00000" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-xs font-bold uppercase tracking-widest opacity-50 flex items-center gap-2"><BookOpen className="w-3 h-3" /> Preferred Program</label>
+                        <select className="w-full px-5 py-3 bg-[#f8f9fa] border border-black/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20">
+                          <option>B.Tech (CSE)</option>
+                          <option>B.Tech (IT)</option>
+                          <option>B.Tech (AI & ML)</option>
+                          <option>M.Tech</option>
+                          <option>Ph.D.</option>
+                        </select>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {formStep === 2 && (
+                  <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold uppercase tracking-widest opacity-50">12th Percentage / JEE Score</label>
+                      <input type="text" required className="w-full px-5 py-3 bg-[#f8f9fa] border border-black/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20" placeholder="e.g. 95% or 98.5 percentile" />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold uppercase tracking-widest opacity-50">School / College Name</label>
+                      <input type="text" required className="w-full px-5 py-3 bg-[#f8f9fa] border border-black/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20" />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold uppercase tracking-widest opacity-50">Upload Marksheet (PDF)</label>
+                      <div className="border-2 border-dashed border-black/10 rounded-2xl p-8 text-center hover:bg-black/5 transition-colors cursor-pointer">
+                        <Download className="w-8 h-8 text-black/20 mx-auto mb-2" />
+                        <p className="text-sm text-black/50">Click to upload your 12th/Graduation marksheet</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {formStep === 3 && (
+                  <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="text-center space-y-6 py-8">
+                    <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                      <CheckCircle2 className="w-10 h-10 text-green-600" />
+                    </div>
+                    <h3 className="font-serif text-2xl">Ready to Submit!</h3>
+                    <p className="text-black/60">Please review your information before final submission. Our team will contact you within 2-3 working days.</p>
+                  </motion.div>
+                )}
+                
+                <div className="pt-8 flex gap-4">
+                  {formStep > 1 && (
+                    <button type="button" onClick={() => setFormStep(formStep - 1)} className="flex-1 py-4 border border-black/10 rounded-2xl font-bold hover:bg-black/5 transition-all">
+                      Back
+                    </button>
+                  )}
+                  <button type="submit" className="flex-[2] py-4 bg-black text-white rounded-2xl font-bold hover:bg-orange-600 transition-all shadow-lg shadow-black/20 flex items-center justify-center gap-2">
+                    {formStep === 3 ? 'Final Submit' : 'Continue'} <Send className="w-4 h-4" />
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

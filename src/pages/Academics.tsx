@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, BookOpen, GraduationCap, Microscope } from 'lucide-react';
 import { DEPARTMENTS } from '../data/departments';
 import { motion } from 'motion/react';
+import { SEO } from '../components/SEO';
 
 export const Academics = () => {
   const container = {
@@ -20,6 +21,10 @@ export const Academics = () => {
 
   return (
     <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <SEO 
+        title="Academics" 
+        description="Explore the academic programs, departments, and educational excellence at MITS Gwalior."
+      />
       {/* Header */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
@@ -58,6 +63,36 @@ export const Academics = () => {
                 Explore Programs <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
+          ))}
+        </div>
+      </motion.section>
+
+      {/* Academic Resources */}
+      <motion.section 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="mb-24"
+      >
+        <h2 className="font-serif text-4xl mb-12 text-center">Academic Resources</h2>
+        <div className="grid md:grid-cols-4 gap-6">
+          {[
+            { title: 'Academic Calendar', icon: BookOpen, link: '/academic-calendar' },
+            { title: 'Syllabus', icon: BookOpen, link: '/syllabus' },
+            { title: 'Schemes', icon: BookOpen, link: '/schemes' },
+            { title: 'Time Table', icon: BookOpen, link: '/timetable' },
+          ].map((resource, i) => (
+            <Link 
+              key={i} 
+              to={resource.link}
+              className="flex flex-col items-center justify-center p-8 bg-white border border-black/10 rounded-3xl hover:bg-orange-50 transition-colors group text-center"
+            >
+              <div className="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <resource.icon className="w-6 h-6 text-orange-600" />
+              </div>
+              <h3 className="font-bold text-lg">{resource.title}</h3>
+            </Link>
           ))}
         </div>
       </motion.section>

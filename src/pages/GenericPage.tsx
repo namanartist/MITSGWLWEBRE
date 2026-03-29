@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { FileText, Download, ExternalLink, ArrowRight, CheckCircle2, Building, BookOpen, Users, Briefcase, GraduationCap, ShieldAlert, Link as LinkIcon, FileCheck, FileSpreadsheet, FlaskConical, Award } from 'lucide-react';
+import { FileText, Download, ExternalLink, ArrowRight, CheckCircle2, Building, BookOpen, Users, Briefcase, GraduationCap, ShieldAlert, Link as LinkIcon, FileCheck, FileSpreadsheet, FlaskConical, Award, Shield, Clock } from 'lucide-react';
+import { SEO } from '../components/SEO';
 
 // Dictionary to hold specific content for generic pages
 const PAGE_CONTENT: Record<string, any> = {
@@ -270,6 +271,75 @@ const PAGE_CONTENT: Record<string, any> = {
       { title: "Annual Report 2024-25", url: "#" },
       { title: "Audit Reports", url: "#" }
     ]
+  },
+  "Code of Conduct": {
+    icon: Shield,
+    description: "The Code of Conduct defines the expectations for behavior and professional ethics for all members of the MITS community.",
+    sections: [
+      {
+        title: "Student Conduct",
+        content: "Students are expected to maintain academic integrity, respect campus property, and adhere to the disciplinary guidelines.",
+        type: "text"
+      },
+      {
+        title: "Faculty Ethics",
+        content: "Faculty members are committed to excellence in teaching, research, and professional development while maintaining high ethical standards.",
+        type: "text"
+      }
+    ],
+    links: [
+      { title: "Student Handbook 2026", url: "#" },
+      { title: "Faculty Code of Ethics", url: "#" },
+      { title: "Disciplinary Procedures", url: "#" }
+    ]
+  },
+  "NAAC Reports": {
+    icon: CheckCircle2,
+    description: "National Assessment and Accreditation Council (NAAC) reports and documentation for MITS Gwalior.",
+    sections: [
+      {
+        title: "Accreditation Status",
+        content: "MITS Gwalior is accredited with an A++ grade by NAAC, reflecting our commitment to quality education.",
+        type: "text"
+      }
+    ],
+    links: [
+      { title: "NAAC SSR Report 2022", url: "#" },
+      { title: "Peer Team Findings", url: "#" },
+      { title: "IQAC Annual Reports", url: "#" }
+    ]
+  },
+  "Academic SOPs": {
+    icon: BookOpen,
+    description: "Standard Operating Procedures (SOPs) for various academic processes at the institute.",
+    sections: [
+      {
+        title: "Process Guidelines",
+        content: "Detailed SOPs for examination, registration, credit transfer, and other academic activities.",
+        type: "text"
+      }
+    ],
+    links: [
+      { title: "Examination SOP", url: "#" },
+      { title: "Registration SOP", url: "#" },
+      { title: "Research SOP", url: "#" }
+    ]
+  },
+  "RTI Information": {
+    icon: Clock,
+    description: "Information provided under the Right to Information (RTI) Act, 2005.",
+    sections: [
+      {
+        title: "Public Authority",
+        content: "Details of the Public Information Officer (PIO) and Appellate Authority at MITS Gwalior.",
+        type: "text"
+      }
+    ],
+    links: [
+      { title: "RTI Manual", url: "#" },
+      { title: "PIO Contact Details", url: "#" },
+      { title: "RTI Application Format", url: "#" }
+    ]
   }
 };
 
@@ -291,6 +361,7 @@ export const GenericPage = ({ title }: { title: string }) => {
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] py-12 px-4 sm:px-6 lg:px-8">
+      <SEO title={title} description={data.description} />
       <div className="max-w-4xl mx-auto">
         
         {/* Header Section */}

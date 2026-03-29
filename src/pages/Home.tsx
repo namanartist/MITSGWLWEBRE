@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowRight, ArrowDown, X, GraduationCap, BookOpen, Users, Building, FileText, MapPin, Calendar, Sparkles, Trophy, Briefcase, Award, Download, FileCheck, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, ArrowDown, X, GraduationCap, BookOpen, Users, Building, FileText, MapPin, Calendar, Sparkles, Trophy, Briefcase, Award, Download, FileCheck, CheckCircle2, Bell } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SEO } from '../components/SEO';
 
 const NoticePopup = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
   return (
@@ -29,9 +30,9 @@ const NoticePopup = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
                 <strong>End Semester Exams:</strong> The timetable for the upcoming even semester examinations is now available on the student ERP.
               </p>
             </div>
-            <button onClick={onClose} className="mt-8 w-full py-3 px-6 border border-black rounded-full hover:bg-[#f2e8e3] transition-colors font-medium flex items-center justify-center gap-2">
+            <Link to="/notice-board" onClick={onClose} className="mt-8 w-full py-3 px-6 border border-black rounded-full hover:bg-[#f2e8e3] transition-colors font-medium flex items-center justify-center gap-2">
               View All Notices <ArrowRight className="w-4 h-4" />
-            </button>
+            </Link>
           </motion.div>
         </div>
       )}
@@ -241,8 +242,10 @@ const QuickLinks = () => {
   const links = [
     { title: 'Admissions 2026', icon: GraduationCap, path: '/admissions' },
     { title: 'Fee Structure', icon: FileText, path: '/admissions#fees' },
-    { title: 'Exam Results', icon: CheckCircle2, path: '/academics' },
+    { title: 'Results (New)', icon: CheckCircle2, path: 'https://iums.mitsgwalior.in/Result/ProgramSelect.aspx', isExternal: true },
+    { title: 'Results (Old)', icon: CheckCircle2, path: 'https://ims.mitsgwalior.in/Result/ProgramSelect.aspx', isExternal: true },
     { title: 'Downloads', icon: Download, path: '/student-life' },
+    { title: 'Notice Board', icon: Bell, path: '/notice-board' },
   ];
 
   return (
@@ -259,18 +262,25 @@ const QuickLinks = () => {
             Access essential resources, portals, and information quickly. Everything you need is just a click away.
           </p>
           <div className="grid grid-cols-2 gap-4">
-            {links.map((link, i) => (
-              <Link 
-                key={i} 
-                to={link.path}
-                className="p-6 border border-black rounded-3xl hover:bg-[#f2e8e3] transition-colors group flex flex-col items-start gap-4"
-              >
-                <div className="w-10 h-10 rounded-full bg-white border border-black/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <link.icon className="w-5 h-5" />
-                </div>
-                <span className="font-medium">{link.title}</span>
-              </Link>
-            ))}
+            {links.map((link, i) => {
+              const Component = link.isExternal ? 'a' : Link;
+              const props = link.isExternal 
+                ? { href: link.path, target: "_blank", rel: "noopener noreferrer" }
+                : { to: link.path };
+
+              return (
+                <Component 
+                  key={i} 
+                  {...(props as any)}
+                  className="p-6 border border-black rounded-3xl hover:bg-[#f2e8e3] transition-colors group flex flex-col items-start gap-4"
+                >
+                  <div className="w-10 h-10 rounded-full bg-white border border-black/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <link.icon className="w-5 h-5" />
+                  </div>
+                  <span className="font-medium">{link.title}</span>
+                </Component>
+              );
+            })}
           </div>
         </motion.div>
         
@@ -283,7 +293,7 @@ const QuickLinks = () => {
         >
           <div className="flex items-center justify-between mb-8 pb-4 border-b border-black/10">
             <h3 className="font-serif text-2xl">Notice Board</h3>
-            <Link to="/about" className="text-sm font-medium hover:underline">View All</Link>
+            <Link to="/notice-board" className="text-sm font-medium hover:underline">View All</Link>
           </div>
           <div className="space-y-6">
             {[
@@ -422,23 +432,20 @@ const News = () => {
             </div>
             <div className="flex items-end justify-between gap-4 mt-auto">
               <h3 className="font-medium text-lg leading-tight">{newsItem.title}</h3>
-              <button className="w-10 h-10 shrink-0 rounded-full border border-black flex items-center justify-center hover:bg-[#f2e8e3] transition-colors">
+              <Link to="/events" className="w-10 h-10 shrink-0 rounded-full border border-black flex items-center justify-center hover:bg-[#f2e8e3] transition-colors">
                 <ArrowRight className="w-4 h-4" />
-              </button>
+              </Link>
             </div>
           </motion.div>
         ))}
       </motion.div>
       
-      <motion.button 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.6 }}
+      <Link 
+        to="/events"
         className="mt-16 px-6 py-3 border border-black rounded-full hover:bg-[#f2e8e3] transition-colors font-medium inline-flex items-center gap-2"
       >
-        View All Events <ArrowDown className="w-4 h-4" />
-      </motion.button>
+        View All Events <ArrowRight className="w-4 h-4" />
+      </Link>
     </section>
   );
 };
@@ -459,6 +466,10 @@ export const Home = () => {
 
   return (
     <>
+      <SEO 
+        title="Home" 
+        description="Welcome to Madhav Institute of Technology & Science (MITS), Gwalior. A premier engineering institution with a legacy of excellence in technical education and research."
+      />
       <NoticePopup isOpen={isNoticeOpen} onClose={() => setIsNoticeOpen(false)} />
       <Hero />
       <Marquee />
